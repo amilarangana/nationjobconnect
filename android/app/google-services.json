@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525155902751",
+    "project_id": "nation-job-connect",
+    "storage_bucket": "nation-job-connect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525155902751:android:55009ba596a78f2d3b7c2a",
+        "android_client_info": {
+          "package_name": "com.example.nation_job_connect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR4_J0oyOqTppL3-jss1lkb0z9XXLZf20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
