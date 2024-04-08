@@ -78,21 +78,21 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen> with BasicScr
                         var shiftType = snapshotShiftType.data;
 
                         return GestureDetector(
-                        child: Container(
-                          margin: const EdgeInsets.all(10),
-                          padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(color: Color(ResColors.colorFontSplash), 
-                          borderRadius: BorderRadius.all(Radius.circular(5)),),
-                          child: Column(
-                            children: [
-                              Text("Nation: ${nation!.name}"),
-                              Text("No of Vacancies: ${vacantShiftsList[i].noOfVacancies}"),
-                              Text("No of Shift Hours: ${vacantShiftsList[i].shiftHours}"),
-                              Text("Shift Type: ${shiftType!.type}"),
-                              Text("Time: ${vacantShiftsList[i].time}"),
-                            ],
+                          child: Container(
+                            margin: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(color: Color(ResColors.colorFontSplash), 
+                            borderRadius: BorderRadius.all(Radius.circular(10)),),
+                            child: Column(
+                              children: [
+                                Text("Nation: ${nation!.name}"),
+                                Text("No of Vacancies: ${vacantShiftsList[i].noOfVacancies}"),
+                                Text("No of Shift Hours: ${vacantShiftsList[i].shiftHours}"),
+                                Text("Shift Type: ${shiftType!.type}"),
+                                Text("Time: ${vacantShiftsList[i].time}"),
+                              ],
+                            ),
                           ),
-                        ),
                         onTap: () {
                           showDialog(context: context, builder: (context) {
                             return ApplyDialog("Confirmation", "Do you need to apply for this shift?", onApply: (){
