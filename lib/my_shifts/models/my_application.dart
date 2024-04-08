@@ -8,11 +8,11 @@ class MyApplication{
   final String vacancyId;
   final Nation nation;
   final ShiftType shiftType;
-  final double shiftHours;
+  final DateTime endTime;
   final DateTime time;
   final int status;
 
-  MyApplication({required this.id, required this.vacancyId, required this.nation, required this.shiftType, required this.shiftHours, 
+  MyApplication({required this.id, required this.vacancyId, required this.nation, required this.shiftType, required this.endTime, 
   required this.time, required this.status, });
 
 factory MyApplication.fromJson(String id, Map<String, dynamic> doc) {
@@ -23,7 +23,8 @@ factory MyApplication.fromJson(String id, Map<String, dynamic> doc) {
       time: DateTime.fromMillisecondsSinceEpoch(
             (doc['time'] as Timestamp).millisecondsSinceEpoch),
       shiftType: ShiftType.fromShortJson(doc['shift_type']),
-      shiftHours: doc['no_of_hours'] as double,
+      endTime: DateTime.fromMillisecondsSinceEpoch(
+            (doc['end_time'] as Timestamp).millisecondsSinceEpoch),
       status: doc['status'] as int
     );
   }
@@ -33,7 +34,7 @@ factory MyApplication.fromJson(String id, Map<String, dynamic> doc) {
       'nation': nation,
       'time': time,
       'shift_type' : shiftType,
-      'no_of_hours' : shiftHours
+      'end_time' : endTime
     };
   }
 }

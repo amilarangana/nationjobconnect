@@ -5,14 +5,15 @@ class Application{
   final String vacancyId;
   final Nation nation;
   final ShiftType shiftType;
-  final double shiftHours;
+  final DateTime endTime;
   final DateTime time;
+  final double wage;
   final String userId;
   final String userName;
   final String fbLink;
   final String deviceId;
 
-  Application(this.vacancyId, this.nation, this.shiftType, this.shiftHours, 
+  Application(this.vacancyId, this.nation, this.shiftType, this.endTime, this.wage,
   this.time, this.userId, this.userName, this.fbLink, this.deviceId );
 
   Map<String, dynamic> toUserJson() {
@@ -21,7 +22,8 @@ class Application{
       'nation': nation.toShortJson(),
       'time': time,
       'shift_type' : shiftType.toJson(),
-      'no_of_hours' : shiftHours,
+      'end_time' : endTime,
+      'wage' : wage,
       'status' : 0
     };
   }

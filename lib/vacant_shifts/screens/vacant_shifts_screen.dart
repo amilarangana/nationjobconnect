@@ -87,9 +87,10 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen> with BasicScr
                               children: [
                                 Text("Nation: ${nation!.name}"),
                                 Text("No of Vacancies: ${vacantShiftsList[i].noOfVacancies}"),
-                                Text("No of Shift Hours: ${vacantShiftsList[i].shiftHours}"),
+                                Text("End Time: ${vacantShiftsList[i].endTime}"),
                                 Text("Shift Type: ${shiftType!.type}"),
                                 Text("Time: ${vacantShiftsList[i].time}"),
+                                Text("Wage: ${vacantShiftsList[i].wage}"),
                               ],
                             ),
                           ),
@@ -103,7 +104,7 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen> with BasicScr
                                       futureUser.then((user) {
                                         if (user != null && user.deviceId.isNotEmpty) {
                                           _dbConnectApplication.sendApplication(Application(vacantShiftsList[i].id, nation, 
-                                            shiftType, vacantShiftsList[i].shiftHours, 
+                                            shiftType, vacantShiftsList[i].endTime, vacantShiftsList[i].wage,
                                             vacantShiftsList[i].time, user.id!, user.name, user.fbProfile, user.deviceId));
                                         }else{
                                           showDialog(context: context,builder: (BuildContext contextSignIn) =>
@@ -119,7 +120,7 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen> with BasicScr
                                                   var futureUserId = _dbConnectUser.saveUser(user);
                                                   futureUserId.then((userId) {
                                                     _dbConnectApplication.sendApplication(Application(vacantShiftsList[i].id, nation, 
-                                                      shiftType, vacantShiftsList[i].shiftHours, vacantShiftsList[i].time, 
+                                                      shiftType, vacantShiftsList[i].endTime, vacantShiftsList[i].wage, vacantShiftsList[i].time, 
                                                       userId, firstName, fbProfile, deviceId));
                                                   });
                                                   

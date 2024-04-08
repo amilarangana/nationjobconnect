@@ -79,7 +79,7 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
                                           children: [
                                             Text(myShiftsList[i].nation.name),
                                             Text("Status: ${myShiftsList[i].status == 0? "Pending":(myShiftsList[i].status == 1? "Approved": "Rejected")}"),
-                                            Text("Shift Hours: ${myShiftsList[i].shiftHours}"),
+                                            Text("End Time: ${myShiftsList[i].endTime}"),
                                             Text("Shift Type: ${myShiftsList[i].shiftType.type}"),
                                             Text("Time: ${myShiftsList[i].time}"),
                                           ],
