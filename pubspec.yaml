@@ -40,6 +40,9 @@ dependencies:
   salomon_bottom_bar: ^3.3.2
   device_info_plus: ^10.0.1
 
+  firebase_auth: ^4.19.1
+  google_sign_in: ^6.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
