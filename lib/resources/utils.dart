@@ -2,16 +2,21 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import '/resources/dimensions.dart';
 
 import 'colors.dart';
 
 class Utils {
-  // static String getDate(DateTime date) {
-  //   DateFormat dateFormat = new DateFormat('dd/MM/yyyy');
-  //   return dateFormat.format(date);
-  // }
+  static String getDate(DateTime date) {
+    DateFormat dateFormat = new DateFormat('EE dd/MM');
+    return dateFormat.format(date);
+  }
+
+  static String getTime(DateTime date) {
+    DateFormat dateFormat = new DateFormat('HH:mm');
+    return dateFormat.format(date);
+  }
 
   static BoxDecoration getTextViewDecoration() {
     return BoxDecoration(
@@ -19,7 +24,8 @@ class Utils {
       borderRadius:
           const BorderRadius.all(Radius.circular(ResDimensions.corner_radius)),
       border: Border.all(
-          width: 1.0, color: const Color(ResColors.colorPrimary).withOpacity(1)),
+          width: 1.0,
+          color: const Color(ResColors.colorPrimary).withOpacity(1)),
       // boxShadow: [
       //   BoxShadow(
       //     color: Colors.grey.withOpacity(0.2),
@@ -37,7 +43,8 @@ class Utils {
       borderRadius:
           const BorderRadius.all(Radius.circular(ResDimensions.corner_radius)),
       border: Border.all(
-          width: 1.0, color: const Color(ResColors.colorFontSplash).withOpacity(1)),
+          width: 1.0,
+          color: const Color(ResColors.colorFontSplash).withOpacity(1)),
       // boxShadow: [
       //   BoxShadow(
       //     color: Colors.grey.withOpacity(0.2),
@@ -89,13 +96,13 @@ class Utils {
             borderSide: BorderSide(color: Colors.red)));
   }
 
-  static Future<String?> getDeviceId() async{
+  static Future<String?> getDeviceId() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     String? deviceId;
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
       deviceId = androidInfo.id;
-    }else if(Platform.isIOS){
+    } else if (Platform.isIOS) {
       IosDeviceInfo iosDeviceInfo = await deviceInfoPlugin.iosInfo;
       deviceId = iosDeviceInfo.identifierForVendor;
     }

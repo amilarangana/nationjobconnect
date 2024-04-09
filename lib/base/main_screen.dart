@@ -18,10 +18,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     _widgetOptions = <Widget>[
-       VacantShiftScreen(),
-       MyShiftScreen(),
-       VacantShiftScreen(),
-       VacantShiftScreen(),
+      VacantShiftScreen(),
+      MyShiftScreen(),
+      VacantShiftScreen(),
+      VacantShiftScreen(),
     ];
     super.initState();
   }
@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  final mainScreenTitles = ["Vacant Shifts", "My Shifts", "History", "Profile"];
+  final mainScreenTitles = ["Vacant Shifts", "My Shifts", "Profile"];
 
   @override
   Widget build(BuildContext context) {
@@ -47,36 +47,42 @@ class _MainScreenState extends State<MainScreen> {
             SalomonBottomBarItem(
                 icon: const SizedBox(
                     width: 40,
-                    child:Icon(Icons.work, color: Color(ResColors.colorFontSplash))
-                ),
-                title: const Text("Vacant", style: TextStyle(color: Colors.white)),
-                selectedColor: Theme.of(context).primaryColor,
-                unselectedColor: Theme.of(context).primaryColor),
-        
+                    child: Icon(Icons.work,
+                        color: Color(ResColors.colorFontSplash))),
+                title:
+                    const Text("Vacant", style: TextStyle(color: Colors.white)),
+                selectedColor: Colors.grey,
+                unselectedColor: Colors.black),
+
             SalomonBottomBarItem(
                 icon: const SizedBox(
                     width: 40,
-                    child: Icon(Icons.my_library_add, color: Color(ResColors.colorFontSplash))),
+                    child: Icon(Icons.my_library_add,
+                        color: Color(ResColors.colorFontSplash))),
                 title: const Text("My", style: TextStyle(color: Colors.white)),
-                selectedColor: Theme.of(context).primaryColorDark,
+                selectedColor: Colors.grey,
                 unselectedColor: Theme.of(context).primaryColor),
-        
+
+            /// Profile
+            // SalomonBottomBarItem(
+            //     icon: const SizedBox(
+            //         width: 40,
+            //         child: Icon(Icons.history,
+            //             color: Color(ResColors.colorFontSplash))),
+            //     title: const Text("History",
+            //         style: TextStyle(color: Colors.white)),
+            //     selectedColor: Colors.grey,
+            //     unselectedColor: Theme.of(context).primaryColor),
+
             /// Profile
             SalomonBottomBarItem(
                 icon: const SizedBox(
                     width: 40,
-                    child: Icon(Icons.history, color: Color(ResColors.colorFontSplash))),
-                title: const Text("History", style: TextStyle(color: Colors.white)),
-                selectedColor: Theme.of(context).primaryColorDark,
-                unselectedColor: Theme.of(context).primaryColor),
-        
-            /// Profile
-            SalomonBottomBarItem(
-                icon: const SizedBox(
-                    width: 40,
-                    child: Icon(Icons.face, color: Color(ResColors.colorFontSplash))),
-                title: const Text("Profile", style: TextStyle(color: Colors.white)),
-                selectedColor: Theme.of(context).primaryColorDark,
+                    child: Icon(Icons.face,
+                        color: Color(ResColors.colorFontSplash))),
+                title: const Text("Profile",
+                    style: TextStyle(color: Colors.white)),
+                selectedColor: Colors.grey,
                 unselectedColor: Theme.of(context).primaryColor),
           ],
         ));
