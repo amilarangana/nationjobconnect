@@ -4,11 +4,9 @@ import 'package:nation_job_connect/firebase/firestore_my_shifts.dart';
 import 'package:nation_job_connect/firebase/firestore_user.dart';
 import 'package:nation_job_connect/my_shifts/widgets/decline_dialog.dart';
 import 'package:nation_job_connect/my_shifts/widgets/my_shift_details_card.dart';
-import 'package:nation_job_connect/vacant_shifts/widgets/shift_details_card.dart';
-import '../../resources/utils.dart';
-import '../../user_profile/models/user.dart';
+import '../../authentication/screens/signin_screen.dart';
+import '../../authentication/store_credentials/auth_shared_prefs.dart';
 import '/my_shifts/models/my_application.dart';
-import '../../resources/colors.dart';
 import '../../widgets/common/no_data.dart';
 import '../../widgets/common/waiting.dart';
 import '/base/base_screen.dart';
@@ -26,6 +24,8 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
   final _dbConnectApplication = FirestoreApplication();
   final _dbConnectUser = FirestoreUser();
 
+  final _authShredPrefs = AuthSharedPrefs();
+
   @override
   void initState() {
     _dbConnectMyShifts.dbConnect();
@@ -40,22 +40,14 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
   @override
   Widget screenBody(BuildContext context) {
     //Load the device id....
-    return FutureBuilder(
-        future: Utils.getDeviceId(),
-        builder:
-            (BuildContext context, AsyncSnapshot<dynamic> snapshotDeviceId) {
-          var deviceId = snapshotDeviceId.data;
-          if (deviceId != null) {
-            //Load the user id....
-            return FutureBuilder(
-                future: _dbConnectUser.readUser(deviceId),
-                builder: (BuildContext context,
-                    AsyncSnapshot<dynamic> snapshotUser) {
-                  User? user = snapshotUser.data;
-                  if (user != null && user.id != null) {
+  
+    var njcUserCredentials = _authShredPrefs.retrieveSavedUserCredentials();
+     if (njcUserCredentials!=null && njcUserCredentials.user != null) {
+                    var njcUser = njcUserCredentials.user;
+
                     //load all user applied vacancies...
                     return StreamBuilder<List<MyApplication>>(
-                        stream: _dbConnectMyShifts.getMyShifts(user.id!),
+                        stream: _dbConnectMyShifts.getMyShifts(njcUser!.id!),
                         builder: (context, snapshotMyShifts) {
                           if (snapshotMyShifts.connectionState ==
                               ConnectionState.active) {
@@ -77,7 +69,7 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
                                               onDecline: () {
                                             _dbConnectApplication
                                                 .removeApplication(
-                                                    user.id!,
+                                                    njcUser.id!,
                                                     myShiftsList[i].vacancyId,
                                                     myShiftsList[i].id);
                                           });
@@ -97,14 +89,13 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
                             return const NoData("No My shifts available");
                           }
                         });
-                  } else {
-                    return const NoData('No My shifts available');
-                  }
-                });
-          } else {
-            return const NoData('No My shifts available');
-          }
-        });
+                 
+      } else {
+         Navigator.push(context,MaterialPageRoute(builder: (context) =>  
+           SigninScreen(onSigninSuccess: (userCredentials){})));
+         return const NoData("No My shifts available");
+      }
+     
   }
 
   @override

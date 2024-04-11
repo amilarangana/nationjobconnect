@@ -11,10 +11,9 @@ class Application{
   final String userId;
   final String userName;
   final String fbLink;
-  final String deviceId;
 
   Application(this.vacancyId, this.nation, this.shiftType, this.endTime, this.wage,
-  this.time, this.userId, this.userName, this.fbLink, this.deviceId );
+  this.time, this.userId, this.userName, this.fbLink );
 
   Map<String, dynamic> toUserJson() {
     return {
@@ -31,7 +30,6 @@ class Application{
   Map<String, dynamic> toNationJson() {
     return {
       'user_id': userId,
-      'device_id': deviceId,
       'fb_profile' : fbLink,
       'name' : userName,
       'status' : 0
