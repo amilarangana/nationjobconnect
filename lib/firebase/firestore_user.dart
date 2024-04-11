@@ -12,13 +12,13 @@ class FirestoreUser extends iDataAccessUser{
   }
 
   @override
-  Future<NJCUser?> readUser(String deviceId) async {
+  Future<NJCUser?> readUser(String uId) async {
     var querySnapshot = 
       await db.collection("app-users")
-              .where('device_id', isEqualTo: deviceId)
+              .where('u_id', isEqualTo: uId)
               .get();
       if (querySnapshot.size > 0) {
-        return NJCUser.fromJson(querySnapshot.docs[0].data());
+        return NJCUser.fromFBJson(querySnapshot.docs[0].id, querySnapshot.docs[0].data());
       }else{
         return null;
       }

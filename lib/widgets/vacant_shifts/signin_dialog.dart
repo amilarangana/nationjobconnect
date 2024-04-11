@@ -17,7 +17,7 @@ class SigninDialog extends StatefulWidget {
 
 class _SigninDialogState extends State<SigninDialog> {
   final _loginFormKey = GlobalKey<FormState>();
-  var emailTextController = TextEditingController();
+  // var emailTextController = TextEditingController();
   var passwordTextController = TextEditingController();
 
   @override
@@ -43,20 +43,20 @@ class _SigninDialogState extends State<SigninDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         const SubTitleText("Form"),
-                        TextFormField(
-                          controller: emailTextController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "First Name can not be empty";
-                            }
-                            return null;
-                          },
-                          style: const TextStyle(
-                              color: Color(ResColors.colorFontSplash),
-                              fontSize: ResDimensions.fontSizeDataEntry),
-                          decoration: Utils.getInputDecoration("Name", null),
-                          cursorColor: const Color(ResColors.colorFontSplash),
-                        ),
+                        // TextFormField(
+                        //   controller: emailTextController,
+                        //   validator: (value) {
+                        //     if (value == null || value.isEmpty) {
+                        //       return "First Name can not be empty";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   style: const TextStyle(
+                        //       color: Color(ResColors.colorFontSplash),
+                        //       fontSize: ResDimensions.fontSizeDataEntry),
+                        //   decoration: Utils.getInputDecoration("Name", null),
+                        //   cursorColor: const Color(ResColors.colorFontSplash),
+                        // ),
                         TextFormField(
                           controller: passwordTextController,
                           validator: (value) {
@@ -77,7 +77,7 @@ class _SigninDialogState extends State<SigninDialog> {
                           "Apply",
                           () {
                             if (_loginFormKey.currentState!.validate()) {
-                              widget.onValidate(emailTextController.text.trim(),
+                              widget.onValidate(
                                   passwordTextController.text.trim());
                             }
                           },
@@ -87,4 +87,4 @@ class _SigninDialogState extends State<SigninDialog> {
   }
 }
 
-typedef ValidateListener = void Function(String firstName, String fbProfile);
+typedef ValidateListener = void Function(String fbProfile);

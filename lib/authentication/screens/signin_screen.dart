@@ -6,11 +6,6 @@ import 'package:nation_job_connect/authentication/store_credentials/auth_shared_
 import '../../widgets/common/alert_dialog.dart';
 import '../../widgets/vacant_shifts/signin_dialog.dart';
 import '/firebase/firestore_user.dart';
-import '../../resources/utils.dart';
-import '../../user_profile/models/njc_user.dart';
-import '../../resources/colors.dart';
-import '../../widgets/common/no_data.dart';
-import '../../widgets/common/waiting.dart';
 import '/base/base_screen.dart';
 import '/base/basic_screen.dart';
 
@@ -33,7 +28,6 @@ class _MyShiftScreenState extends BaseState<SigninScreen> with BasicScreen {
   @override
   void initState() {
     _dbConnectUser.dbConnect();
-    _authShredPrefs.init();
     super.initState();
   }
   
@@ -53,17 +47,61 @@ class _MyShiftScreenState extends BaseState<SigninScreen> with BasicScreen {
               borderRadius: BorderRadius.circular(10)),
               child: IconButton(
                 iconSize: 40,
-                icon: Image.asset('assets/images/ic_google.png', width: 40),
+                icon: Row(
+                  children: [
+                    Image.asset('assets/images/ic_google.png', width: 40),
+                    const Text("Signin with Google")
+                  ]),
                 onPressed: () async {
                   var njcUserCredentials = await authProvider.signIn();
-                                      if (njcUserCredentials != null && njcUserCredentials.user !=null) {
-                                        print(njcUserCredentials.user!.email);
-                                          showDialog(context: context,
-                                            builder: (BuildContext contextSignIn) =>
-                                                  SigninDialog(
-                                                    onValidate:(firstName,fbProfile) async {
+                  
+                  if (njcUserCredentials != null && njcUserCredentials.user !=null) {
+                    var savedUser = await _dbConnectUser.readUser(njcUserCredentials.user!.uId);
+
+                    if(savedUser != null ){
+                      var signedUser = njcUserCredentials.user;
+                      signedUser!.id = savedUser.id;
+                      signedUser!.fbProfile = savedUser.fbProfile;
+                      njcUserCredentials.user = signedUser;
+                      _authShredPrefs.storeUserCredentials(njcUserCredentials);
+
+                      if (savedUser.fbProfile == null || savedUser.fbProfile!.isEmpty) {
+                        showDialog(context: context,
+                              builder: (BuildContext contextSignIn) =>
+                                  SigninDialog(
+                                    onValidate:(fbProfile) async {
+                                      Navigator.of(contextSignIn).pop();
+                                                        if (fbProfile.isEmpty) {
+                                                          return showDialog(context: contextSignIn,
+                                                            builder: (contextError) => const CustomAlertDialog(
+                                                              'Error', "Please fill the required fields"));
+                                                        } else {
+                                                          var njcUser = njcUserCredentials.user;
+                                                          njcUser!.fbProfile = fbProfile;
+                                                          
+                                                          _authShredPrefs.storeUserCredentials(njcUserCredentials);
+                                                          
+                                                          widget.onSigninSuccess(njcUserCredentials);
+
+                                                          //Only for testing....
+                                                          var retrieved = _authShredPrefs.retrieveSavedUserCredentials();
+                                                          if (retrieved != null && retrieved.user != null) {
+                                                            print(retrieved.user!.name);
+                                                          }
+                                                        Navigator.of(context).pop();
+                                }
+                          }));
+                      }else{
+                         widget.onSigninSuccess(njcUserCredentials);
+                         Navigator.of(context).pop();
+                      }
+                    }else{
+                      showDialog(context: context,
+                        builder: (BuildContext contextSignIn) =>
+                          SigninDialog(
+                                                    onValidate:(fbProfile) async {
                                                       Navigator.of(contextSignIn).pop();
-                                                        if (firstName.isEmpty ||fbProfile.isEmpty) {
+                                                        if (fbProfile.isEmpty) {
                                                           return showDialog(context: contextSignIn,
                                                             builder: (contextError) => const CustomAlertDialog(
                                                               'Error', "Please fill the required fields"));
@@ -86,7 +124,38 @@ class _MyShiftScreenState extends BaseState<SigninScreen> with BasicScreen {
                                                         Navigator.of(context).pop();
                                                         }
                                                     }));
-                                          
+                    }
+                                        // print(njcUserCredentials.user!.email);
+                                        
+                                        //   showDialog(context: context,
+                                        //     builder: (BuildContext contextSignIn) =>
+                                        //           SigninDialog(
+                                        //             onValidate:(firstName,fbProfile) async {
+                                        //               Navigator.of(contextSignIn).pop();
+                                        //                 if (firstName.isEmpty ||fbProfile.isEmpty) {
+                                        //                   return showDialog(context: contextSignIn,
+                                        //                     builder: (contextError) => const CustomAlertDialog(
+                                        //                       'Error', "Please fill the required fields"));
+                                        //                 } else {
+                                        //                   var njcUser = njcUserCredentials.user;
+                                        //                   njcUser!.fbProfile = fbProfile;
+
+                                        //                   var id = await _dbConnectUser.saveUser(njcUser);
+                                        //                   njcUser.id = id;
+                                        //                   njcUserCredentials.user = njcUser;
+
+                                        //                   _authShredPrefs.storeUserCredentials(njcUserCredentials);
+                                                          
+                                        //                   widget.onSigninSuccess(njcUserCredentials);
+                                        //                   //Only for testing....
+                                        //                   var retrieved = _authShredPrefs.retrieveSavedUserCredentials();
+                                        //                   if (retrieved != null && retrieved.user != null) {
+                                        //                     print(retrieved.user!.name);
+                                        //                   }
+                                        //                 Navigator.of(context).pop();
+                                        //                 }
+                                        //             }));
+                                        
                                         }
                                         // Navigator.of(context).pop();
                                       

@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
  
   void proceedToNext() {
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 1), () {
       // Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) => const MainScreen(
