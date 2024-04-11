@@ -65,7 +65,6 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
               if (njcUserCredentials!=null && njcUserCredentials.user != null) {
                 var njcUser = njcUserCredentials.user;
 
-                
                 return StreamBuilder<List<MyApplication>>(
                   stream: _dbConnectMyShifts.getMyShifts(njcUser!.id!),
                   builder: (context, snapshotMyShifts) {
@@ -175,10 +174,98 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
                         }
                     });
               }else{
-                return const NoData("No vacant shifts available");
+                //Show list view of the vacant shifts...
+                            return ListView.builder(
+                              itemCount: vacantShiftsList.length,
+                              //Load the nation details using nation's id...
+                              itemBuilder: (ctx, i) => FutureBuilder(
+                                    future: _dbConnectNation
+                                        .readNationsList(vacantShiftsList[i].nation),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<Nation> snapshot) {
+                                      var nation = snapshot.data;
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        //Load the shift types list.......
+                                        return FutureBuilder(
+                                          future: _dbConnectShiftType
+                                              .readShiftType(vacantShiftsList[i].shiftType),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<ShiftType> snapshotShiftType) {
+                                            if (snapshotShiftType.connectionState ==
+                                                ConnectionState.done) {
+                                              var shiftType = snapshotShiftType.data;
+                                              return ShiftDetailsCard(
+                                                nation: nation,
+                                                onTap: () {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return ApplyDialog("Confirmation",
+                                                            "Do you need to apply for this shift?",
+                                                            onApply: () {
+                                                              var njcUserCredentials = _authShredPrefs.retrieveSavedUserCredentials();
+                                                              if (njcUserCredentials != null &&
+                                                                      njcUserCredentials.user != null) {
+                                                                var user = njcUserCredentials.user;
+                                                                    _dbConnectApplication
+                                                                        .sendApplication(Application(
+                                                                            vacantShiftsList[i]
+                                                                                .id,
+                                                                            nation!,
+                                                                            shiftType!,
+                                                                            vacantShiftsList[i]
+                                                                                .endTime,
+                                                                            vacantShiftsList[i]
+                                                                                .wage,
+                                                                            vacantShiftsList[i]
+                                                                                .time,
+                                                                            user!.id!,
+                                                                            user.name!,
+                                                                            user.fbProfile!));
+                                                                  } else {
+                                                                    Navigator.push(context,
+                                                                      MaterialPageRoute(builder: (context) =>  
+                                                                      SigninScreen(onSigninSuccess: (userCredentials){
+                                                                        _dbConnectApplication
+                                                                        .sendApplication(Application(
+                                                                            vacantShiftsList[i]
+                                                                                .id,
+                                                                            nation!,
+                                                                            shiftType!,
+                                                                            vacantShiftsList[i]
+                                                                                .endTime,
+                                                                            vacantShiftsList[i]
+                                                                                .wage,
+                                                                            vacantShiftsList[i]
+                                                                                .time,
+                                                                            userCredentials.user!.id!,
+                                                                            userCredentials.user!.name!,
+                                                                            userCredentials.user!.fbProfile!));
+                                                                      },)));
+                                                                    
+                                                                  }
+                                                        });
+                                                      });
+                                                },
+                                                vacantShift: vacantShiftsList[i],
+                                                shiftType: shiftType,
+                                              );
+                                            } else {
+                                              return const NoData(
+                                                  "No vacant shifts available");
+                                            }
+                                          },
+                                        );
+                                      } else if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return const Waiting();
+                                      } else {
+                                        return const NoData("No vacant shifts available");
+                                      }
+                                    },
+                                  ));
               }
-            
-              
             } else {
               return const NoData("No vacant shifts available");
             }

@@ -91,9 +91,9 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
                         });
                  
       } else {
-         Navigator.push(context,MaterialPageRoute(builder: (context) =>  
-           SigninScreen(onSigninSuccess: (userCredentials){})));
-         return const NoData("No My shifts available");
+        //  Navigator.push(context,MaterialPageRoute(builder: (context) =>  
+        //    SigninScreen(onSigninSuccess: (userCredentials){})));
+         return const NoData("Please signin");
       }
      
   }
