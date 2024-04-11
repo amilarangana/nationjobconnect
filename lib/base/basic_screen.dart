@@ -11,6 +11,7 @@ mixin BasicScreen<Screen extends BaseScreen> on BaseState<Screen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
             key: _key,
             // appBar: HomeAppBar(screenName(), _key),

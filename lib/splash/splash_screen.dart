@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nation_job_connect/base/main_screen.dart';
 
+import '../authentication/store_credentials/auth_shared_prefs.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -11,6 +13,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+ 
   void proceedToNext() {
     Timer(const Duration(seconds: 3), () {
       // Navigator.of(context).pop();

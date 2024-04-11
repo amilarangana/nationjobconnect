@@ -47,8 +47,9 @@ class ApplyDialog extends StatelessWidget {
                       TransparentButton(
                         "Apply",
                         () {
-                          onApply();
                           Navigator.of(context).pop();
+                          onApply();
+                          
                         }
                       ),
                     ],
