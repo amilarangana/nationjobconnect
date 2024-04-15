@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '/resources/colors.dart';
 import '/resources/dimensions.dart';
 import '/resources/utils.dart';
@@ -17,11 +18,13 @@ class SigninDialog extends StatefulWidget {
 
 class _SigninDialogState extends State<SigninDialog> {
   final _loginFormKey = GlobalKey<FormState>();
-  // var emailTextController = TextEditingController();
+  var nationMemberNoTextController = TextEditingController();
   var passwordTextController = TextEditingController();
+  bool isNationMember = false;
 
   @override
   Widget build(BuildContext context) {
+
     return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
         child: Dialog(
@@ -42,21 +45,7 @@ class _SigninDialogState extends State<SigninDialog> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        const SubTitleText("Form"),
-                        // TextFormField(
-                        //   controller: emailTextController,
-                        //   validator: (value) {
-                        //     if (value == null || value.isEmpty) {
-                        //       return "First Name can not be empty";
-                        //     }
-                        //     return null;
-                        //   },
-                        //   style: const TextStyle(
-                        //       color: Color(ResColors.colorFontSplash),
-                        //       fontSize: ResDimensions.fontSizeDataEntry),
-                        //   decoration: Utils.getInputDecoration("Name", null),
-                        //   cursorColor: const Color(ResColors.colorFontSplash),
-                        // ),
+                        const SubTitleText("Enter your details"),
                         TextFormField(
                           controller: passwordTextController,
                           validator: (value) {
@@ -73,12 +62,33 @@ class _SigninDialogState extends State<SigninDialog> {
                               Utils.getInputDecoration("FB Profile", null),
                           cursorColor: const Color(ResColors.colorFontSplash),
                         ),
+                        Checkbox(value: false, semanticLabel: "I have a nation membership", onChanged: (bool? newValue) {
+                          setState(() {
+                             newValue != null ? isNationMember = newValue: isNationMember = false;
+                          });
+                        }),
+                        Visibility(
+                          visible: isNationMember,
+                          child: TextFormField(
+                            controller: nationMemberNoTextController,
+                            validator: (value) {
+                              return null;
+                            },
+                            obscureText: false,
+                            style: const TextStyle(
+                                color: Color(ResColors.colorFontSplash),
+                                fontSize: ResDimensions.fontSizeDataEntry),
+                            decoration:
+                                Utils.getInputDecoration("Nation Membership No", null),
+                            cursorColor: const Color(ResColors.colorFontSplash),
+                          ),
+                        ),
                         TransparentButton(
                           "Apply",
                           () {
                             if (_loginFormKey.currentState!.validate()) {
                               widget.onValidate(
-                                  passwordTextController.text.trim());
+                                  passwordTextController.text.trim(), nationMemberNoTextController.text.trim());
                             }
                           },
                         ),
@@ -87,4 +97,4 @@ class _SigninDialogState extends State<SigninDialog> {
   }
 }
 
-typedef ValidateListener = void Function(String fbProfile);
+typedef ValidateListener = void Function(String fbProfile, String nationMembershipNo);

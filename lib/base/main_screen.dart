@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nation_job_connect/my_shifts/screens/my_shifts_screen.dart';
 import 'package:nation_job_connect/resources/colors.dart';
+import 'package:nation_job_connect/user_profile/screens/profile_screen.dart';
 import 'package:nation_job_connect/vacant_shifts/screens/vacant_shifts_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -20,8 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     _widgetOptions = <Widget>[
       VacantShiftScreen(),
       MyShiftScreen(),
-      VacantShiftScreen(),
-      VacantShiftScreen(),
+      ProfileScreen(),
     ];
     super.initState();
   }
@@ -50,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: Icon(Icons.work,
                         color: Color(ResColors.colorFontSplash))),
                 title:
-                    const Text("Vacant", style: TextStyle(color: Colors.white)),
+                    const Text("Vacant Shifts", style: TextStyle(color: Colors.white)),
                 selectedColor: Colors.grey,
                 unselectedColor: Colors.black),
 
@@ -59,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
                     width: 40,
                     child: Icon(Icons.my_library_add,
                         color: Color(ResColors.colorFontSplash))),
-                title: const Text("My", style: TextStyle(color: Colors.white)),
+                title: const Text("My shifts", style: TextStyle(color: Colors.white)),
                 selectedColor: Colors.grey,
                 unselectedColor: Theme.of(context).primaryColor),
 

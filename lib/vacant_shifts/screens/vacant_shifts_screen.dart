@@ -60,6 +60,8 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
           if (snapshotVacantShifts.connectionState == ConnectionState.active) {
             var vacantShiftsList = snapshotVacantShifts.data;
             if (vacantShiftsList != null && vacantShiftsList.isNotEmpty) {
+              //Remove the shifts which has 0 available vacancies
+              vacantShiftsList.removeWhere((vacantShift) => vacantShift.noOfVacancies == 0);
 
               var njcUserCredentials = _authShredPrefs.retrieveSavedUserCredentials();
               if (njcUserCredentials!=null && njcUserCredentials.user != null) {
@@ -71,6 +73,7 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
                     if (snapshotMyShifts.connectionState == ConnectionState.active) {
                       var myShiftsList = snapshotMyShifts.data;
                         if (myShiftsList != null) {
+                          
                           for (var myShift in myShiftsList) {
                             vacantShiftsList.removeWhere((vacantShift) => vacantShift.id == myShift.vacancyId);
                           }

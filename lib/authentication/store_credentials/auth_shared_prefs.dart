@@ -28,4 +28,10 @@ class AuthSharedPrefs{
     }
     return null;
   }
+
+  UserCredentials? removeSavedUserCredentials() { 
+    var userCredentialsJson = sharedPrefs.remove(_PREF_USER_CREDENTIAL);
+    
+    return null;
+  }
 }

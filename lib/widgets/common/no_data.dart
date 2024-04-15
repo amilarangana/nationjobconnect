@@ -9,6 +9,6 @@ class NoData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Text(message,
-            style: const TextStyle(color: Color(ResColors.colorFontSplash))));
+            style: const TextStyle(color: Colors.black)));
   }
 }

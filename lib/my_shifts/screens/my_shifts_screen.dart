@@ -3,6 +3,7 @@ import 'package:nation_job_connect/firebase/firestore_application.dart';
 import 'package:nation_job_connect/firebase/firestore_my_shifts.dart';
 import 'package:nation_job_connect/firebase/firestore_user.dart';
 import 'package:nation_job_connect/my_shifts/widgets/decline_dialog.dart';
+import 'package:nation_job_connect/my_shifts/widgets/info_dialog.dart';
 import 'package:nation_job_connect/my_shifts/widgets/my_shift_details_card.dart';
 import '../../authentication/screens/signin_screen.dart';
 import '../../authentication/store_credentials/auth_shared_prefs.dart';
@@ -61,7 +62,16 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
                                 itemBuilder: (ctx, i) => MyShiftDetailsCard(
                                   nation: myShiftsList[i].nation,
                                   onTap: () {
-                                    showDialog(
+                                    if (myShiftsList[i].status == 1) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const InfoDialog("Info",
+                                              "You can not decline the approved shifts here. Please contact nation's admin.",
+                                             );
+                                        });
+                                    }else{
+                                      showDialog(
                                         context: context,
                                         builder: (context) {
                                           return DeclineDialog("Confirmation",
@@ -74,6 +84,8 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
                                                     myShiftsList[i].id);
                                           });
                                         });
+                                    }
+                                    
                                   },
                                   myApplication: myShiftsList[i],
                                   shiftType: myShiftsList[i].shiftType,
@@ -93,7 +105,7 @@ class _MyShiftScreenState extends BaseState<MyShiftScreen> with BasicScreen {
       } else {
         //  Navigator.push(context,MaterialPageRoute(builder: (context) =>  
         //    SigninScreen(onSigninSuccess: (userCredentials){})));
-         return const NoData("Please signin");
+         return const NoData("Please signin to see your shifts");
       }
      
   }

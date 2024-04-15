@@ -27,7 +27,7 @@ class GoogleAuth extends IDataAccessAuth{
 
       if (user != null) {
         njcUser = NJCUser(uId: user.uid, name: user.displayName, email: user.email, 
-        phoneNo: user.phoneNumber, photoUrl: user.photoURL);
+        phoneNo: user.phoneNumber, photoUrl: user.photoURL, isCurrentMember: false);
       }
       //Fill UserCredentials object using google credentials.....
       if (googleCredential !=null) {

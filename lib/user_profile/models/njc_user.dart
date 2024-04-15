@@ -6,8 +6,12 @@ class NJCUser{
   final String? phoneNo;
   final String? photoUrl;
   String? fbProfile;
+  String? memberShipNo;
+  String? nation;
+  bool isCurrentMember;
 
-  NJCUser({required this.uId, this.email, this.phoneNo, this.photoUrl, this.id,  this.name, this.fbProfile});
+  NJCUser({required this.uId, this.email, this.phoneNo, this.photoUrl, this.id,  this.name, this.fbProfile, 
+  this.memberShipNo, this.nation, required this.isCurrentMember});
 
   factory NJCUser.fromJson(Map<String, dynamic> doc){
     return NJCUser(
@@ -15,9 +19,11 @@ class NJCUser{
       email: doc['email'] != null? doc['email'] as String: null,
       phoneNo: doc['phone_no']!= null ? doc['phone_no'] as String : null,
       photoUrl: doc['photo_url'] !=null? doc['photo_url'] as String : null,
-      // deviceId: doc['device_id'] as String, 
       name: doc['name'] as String, 
       fbProfile: doc['fb_profile']!=null? doc['fb_profile'] as String : null,
+      // memberShipNo: doc['nation_membership_no']!=null? doc['nation_membership_no'] as String : null,
+      // nation: doc['nation'] !=null ? doc['nation'] as String : null,
+      isCurrentMember: doc['is_current_member'] as bool,
       uId: doc['u_id'] as String);
   }
 
@@ -27,9 +33,11 @@ class NJCUser{
       email: doc['email'] != null? doc['email'] as String: null,
       phoneNo: doc['phone_no']!= null ? doc['phone_no'] as String : null,
       photoUrl: doc['photo_url'] !=null? doc['photo_url'] as String : null,
-      // deviceId: doc['device_id'] as String, 
       name: doc['name'] as String, 
       fbProfile: doc['fb_profile']!=null? doc['fb_profile'] as String : null,
+      memberShipNo: doc['nation_membership_no']!=null? doc['nation_membership_no'] as String : null,
+      nation: doc['nation'] !=null ? doc['nation'] as String : null,
+      isCurrentMember: doc['is_current_member'] as bool,
       uId: doc['u_id'] as String);
   }
 
@@ -41,7 +49,10 @@ class NJCUser{
       'phone_no' : phoneNo,
       'photo_url' : photoUrl,
       'u_id' : uId,
-      'fb_profile' : fbProfile
+      'fb_profile' : fbProfile,
+      'nation_membership_no' : memberShipNo,
+      'nation' : nation,
+      'is_current_member' : isCurrentMember
     };
   }
 }

@@ -66,40 +66,45 @@ class _MyShiftScreenState extends BaseState<SigninScreen> with BasicScreen {
                       _authShredPrefs.storeUserCredentials(njcUserCredentials);
 
                       if (savedUser.fbProfile == null || savedUser.fbProfile!.isEmpty) {
+                        // ignore: use_build_context_synchronously
                         showDialog(context: context,
                               builder: (BuildContext contextSignIn) =>
                                   SigninDialog(
-                                    onValidate:(fbProfile) async {
+                                    onValidate:(fbProfile, nationMembershipNo) async {
                                       Navigator.of(contextSignIn).pop();
-                                                        if (fbProfile.isEmpty) {
-                                                          return showDialog(context: contextSignIn,
-                                                            builder: (contextError) => const CustomAlertDialog(
-                                                              'Error', "Please fill the required fields"));
-                                                        } else {
-                                                          var njcUser = njcUserCredentials.user;
-                                                          njcUser!.fbProfile = fbProfile;
-                                                          
-                                                          _authShredPrefs.storeUserCredentials(njcUserCredentials);
-                                                          
-                                                          widget.onSigninSuccess(njcUserCredentials);
+                                        if (fbProfile.isEmpty) {
+                                          return showDialog(context: contextSignIn,
+                                            builder: (contextError) => const CustomAlertDialog(
+                                              'Error', "Please fill the required fields"));
+                                        } else {
+                                            var njcUser = njcUserCredentials.user;
+                                            njcUser!.fbProfile = fbProfile;
 
-                                                          //Only for testing....
-                                                          var retrieved = _authShredPrefs.retrieveSavedUserCredentials();
-                                                          if (retrieved != null && retrieved.user != null) {
-                                                            print(retrieved.user!.name);
-                                                          }
-                                                        Navigator.of(context).pop();
-                                }
+                                            var id = await _dbConnectUser.saveUser(njcUser);
+                                            _authShredPrefs.storeUserCredentials(njcUserCredentials);
+                                                          
+                                            widget.onSigninSuccess(njcUserCredentials);
+
+                                            //Only for testing....
+                                            var retrieved = _authShredPrefs.retrieveSavedUserCredentials();
+                                            if (retrieved != null && retrieved.user != null) {
+                                              print(retrieved.user!.name);
+                                            }
+                                            Navigator.of(context).pop();
+                                        }
+                                        
                           }));
                       }else{
                          widget.onSigninSuccess(njcUserCredentials);
+                         // ignore: use_build_context_synchronously
                          Navigator.of(context).pop();
                       }
                     }else{
+                      // ignore: use_build_context_synchronously
                       showDialog(context: context,
                         builder: (BuildContext contextSignIn) =>
                           SigninDialog(
-                                                    onValidate:(fbProfile) async {
+                                                    onValidate:(fbProfile, nationMembershipNo) async {
                                                       Navigator.of(contextSignIn).pop();
                                                         if (fbProfile.isEmpty) {
                                                           return showDialog(context: contextSignIn,
@@ -121,6 +126,7 @@ class _MyShiftScreenState extends BaseState<SigninScreen> with BasicScreen {
                                                           if (retrieved != null && retrieved.user != null) {
                                                             print(retrieved.user!.name);
                                                           }
+                                                        // ignore: use_build_context_synchronously
                                                         Navigator.of(context).pop();
                                                         }
                                                     }));
