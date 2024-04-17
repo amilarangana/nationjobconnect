@@ -3,13 +3,14 @@ import 'package:nation_job_connect/authentication/data_access/google_auth.dart';
 import 'package:nation_job_connect/authentication/data_access/idata_access_auth.dart';
 import 'package:nation_job_connect/authentication/models/user_credentials.dart';
 import 'package:nation_job_connect/authentication/store_credentials/auth_shared_prefs.dart';
+import 'package:nation_job_connect/my_shifts/screens/event_calendar_screen.dart';
 import '../../authentication/screens/signin_screen.dart';
 import '/firebase/firestore_user.dart';
 import '/base/base_screen.dart';
 import '/base/basic_screen.dart';
 
 class ProfileScreen extends BaseScreen {
-  static const routeName = '/signin_screen';
+  static const routeName = '/profile_screen';
   
   ProfileScreen({super.key});
 
@@ -45,8 +46,18 @@ class _MyShiftScreenState extends BaseState<ProfileScreen> with BasicScreen {
               children: [
                 savedUserCredentials != null ? Image.network(savedUserCredentials.user!.photoUrl!, width: 80): const Text(''),
                 const SizedBox(height: 50),
-                savedUserCredentials != null ? Text(savedUserCredentials.user!.name!, style: const TextStyle(fontSize: 20),): const Text(""),
+                savedUserCredentials != null ? Text(savedUserCredentials.user!.name!, style: const TextStyle(fontSize: 20),)
+                  : const Text(""),
                 const SizedBox(height: 50),
+                ElevatedButton(
+                  child: const Text("My Calendar"),
+                  onPressed: () async {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => EventCalendarScreen(
+                              key: const Key("event_calendar_screen"),
+                            )));
+                  },
+                ),
                 Card(
                   elevation: 5,
                   shape: RoundedRectangleBorder(

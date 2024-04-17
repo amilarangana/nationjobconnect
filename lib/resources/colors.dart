@@ -9,7 +9,7 @@ class ResColors {
   static const colorFontOnline = 0xff81b214;
 
   //bg colors
-  static const colorRed = 0x55ff0000;
+  static const colorRed = 0xffF09F99;
   static const colorYellow = 0x55ffff00;
-  static const colorGreen = 0x5500ff00;
+  static const colorGreen = 0xffC1F0C4;
 }

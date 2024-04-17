@@ -24,7 +24,7 @@ class FirestoreMyShifts extends iDataAccessMyShifts{
         return value.toJson();
     })
     .snapshots()
-    . map((query) => query.docs.map((snapshot) => snapshot.data()).toList());
+    .map((query) => query.docs.map((snapshot) => snapshot.data()).toList());
   }
    
 }

@@ -4,6 +4,12 @@ class Nation {
   final String description;
   final String logo;
 
+  @override
+  bool operator ==(Object other) => other is Nation && other.name == name;
+
+  @override
+  int get hashCode => name.hashCode;
+
   Nation(
       {required this.id,
       required this.name,

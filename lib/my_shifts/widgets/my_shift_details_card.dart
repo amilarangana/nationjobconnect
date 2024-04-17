@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nation_job_connect/my_shifts/models/my_application.dart';
 import 'package:nation_job_connect/nations/models/nation.dart';
+import 'package:nation_job_connect/resources/colors.dart';
 import 'package:nation_job_connect/resources/utils.dart';
 import 'package:nation_job_connect/shift_type/models/shift_type.dart';
 import 'package:nation_job_connect/vacant_shifts/models/vacant_shift.dart';
@@ -30,11 +31,11 @@ class MyShiftDetailsCard extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: myApplication.status == 1
-              ? Color.fromARGB(255, 193, 240, 196)
+              ? const Color(ResColors.colorGreen)
               : (myApplication.status == 2
-                  ? Color.fromARGB(255, 240, 159, 153)
+                  ? const Color(ResColors.colorRed)
                   : Colors.white),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         child: Row(
           children: [
@@ -44,14 +45,14 @@ class MyShiftDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    nation?.name ?? "",
-                    style: TextStyle(fontSize: 14),
+                    nation.name,
+                    style: const TextStyle(fontSize: 14),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Image.network(
-                    nation?.logo ?? "",
+                    nation.logo,
                     width: 70,
                     height: 70,
                   ),
@@ -71,15 +72,15 @@ class MyShiftDetailsCard extends StatelessWidget {
               children: [
                 Text(
                   shiftType?.type ?? "",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
 
                 Text("Date: ${Utils.getDate(myApplication.time)}"),
                 Text(
                     "Hours: ${Utils.getTime(myApplication.time)} - ${Utils.getTime(myApplication.endTime)}"),
                 Text(
-                  "${myApplication.status == 0 ? "Pending" : (myApplication.status == 1 ? "Approved" : "Rejected")}",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  myApplication.status == 0 ? "Pending" : (myApplication.status == 1 ? "Approved" : "Rejected"),
+                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
 
                 const CustomContainer(

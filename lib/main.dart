@@ -4,6 +4,7 @@ import 'package:nation_job_connect/firebase/firestore_connect.dart';
 import 'package:nation_job_connect/splash/splash_screen.dart';
 import 'authentication/store_credentials/auth_shared_prefs.dart';
 import 'firebase_options.dart';
+import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +12,17 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );  
+  
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
+}
+
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
 }
 
 class MyApp extends StatelessWidget {

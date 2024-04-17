@@ -16,4 +16,18 @@ class FirestoreNation extends iDataAccessNation{
     var documentSnapshot = await db.collection("nations").doc(nationId).get();
     return Nation.fromJson(documentSnapshot.id, documentSnapshot.data()!=null? documentSnapshot.data()!:{});
   }
+  
+  @override
+  Future<List<Nation>> getNationsList() async{
+    
+    var querySnapshot = 
+    await db.collection("nations")
+    .get();
+
+    List<Nation> list = [];
+     for (var element in querySnapshot.docs) { 
+      list.add(Nation.fromJson(element.id, element.data()));
+     }
+     return list;
+  }
 }

@@ -11,9 +11,12 @@ class Application{
   final String userId;
   final String userName;
   final String fbLink;
+  final String? membershipNo;
+  final String? nationName;
+  final String? profilePic;
 
-  Application(this.vacancyId, this.nation, this.shiftType, this.endTime, this.wage,
-  this.time, this.userId, this.userName, this.fbLink );
+  Application(this.vacancyId, this.nation, this.shiftType, this.endTime, this.wage, this.time, 
+  this.userId, this.userName, this.fbLink, this.membershipNo, this.nationName, this.profilePic );
 
   Map<String, dynamic> toUserJson() {
     return {
@@ -32,6 +35,9 @@ class Application{
       'user_id': userId,
       'fb_profile' : fbLink,
       'name' : userName,
+      'nation_membership_no' : membershipNo,
+      'nation_name' : nationName,
+      'profile_pic' : profilePic,
       'status' : 0
     };
   }

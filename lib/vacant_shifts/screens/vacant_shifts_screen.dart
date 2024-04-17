@@ -126,7 +126,10 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
                                                                                 .time,
                                                                             user!.id!,
                                                                             user.name!,
-                                                                            user.fbProfile!));
+                                                                            user.fbProfile!,
+                                                                            user.memberShipNo,
+                                                                            user.nation,
+                                                                            user.photoUrl));
                                                                   } else {
                                                                     Navigator.push(context,
                                                                       MaterialPageRoute(builder: (context) =>  
@@ -145,7 +148,10 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
                                                                                 .time,
                                                                             userCredentials.user!.id!,
                                                                             userCredentials.user!.name!,
-                                                                            userCredentials.user!.fbProfile!));
+                                                                            userCredentials.user!.fbProfile!,
+                                                                            userCredentials.user!.memberShipNo,
+                                                                            userCredentials.user!.nation,
+                                                                            userCredentials.user!.photoUrl));
                                                                       },)));
                                                                     
                                                                   }
@@ -225,7 +231,10 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
                                                                                 .time,
                                                                             user!.id!,
                                                                             user.name!,
-                                                                            user.fbProfile!));
+                                                                            user.fbProfile!,
+                                                                            user.memberShipNo,
+                                                                            user.nation,
+                                                                            user.photoUrl));
                                                                   } else {
                                                                     Navigator.push(context,
                                                                       MaterialPageRoute(builder: (context) =>  
@@ -244,7 +253,10 @@ class _VacantShiftScreenState extends BaseState<VacantShiftScreen>
                                                                                 .time,
                                                                             userCredentials.user!.id!,
                                                                             userCredentials.user!.name!,
-                                                                            userCredentials.user!.fbProfile!));
+                                                                            userCredentials.user!.fbProfile!,
+                                                                            userCredentials.user!.memberShipNo,
+                                                                            userCredentials.user!.nation,
+                                                                            userCredentials.user!.photoUrl));
                                                                       },)));
                                                                     
                                                                   }

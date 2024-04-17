@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nation_job_connect/base/main_screen.dart';
 
-import '../authentication/store_credentials/auth_shared_prefs.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
